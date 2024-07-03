@@ -25,8 +25,9 @@ RUN docker-php-ext-install -j$(nproc) \
     pcntl \
     gd
 
-# Needed for NumberFormatter, not sure why
-#RUN docker-php-ext-configure intl && docker-php-ext-install intl
+# Install Xdebug, needed for code coverage and debugging
+RUN pecl install xdebug
+RUN docker-php-ext-enable xdebug
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -39,7 +40,6 @@ COPY ./docker/php-fpm/conf/php.ini /usr/local/etc/php/conf.d/app.ini
 
 # copy opcache configuration
 COPY ./docker/php-fpm/conf/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
-
 
 # Set the working directory to /var/www
 WORKDIR /var/www
