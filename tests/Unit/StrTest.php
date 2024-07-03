@@ -38,14 +38,20 @@ it(
     'another phrase'                                               => [
         'Why of course you can, old sport', 'The Great Gatsby', false
     ],
-    'a phrase that is really close to being an anagram but isn\'t' => ['thee eyes', 'they see', false]
+    'a phrase that is really close to being an anagram but isn\'t' => ['thee eyes', 'they see', false],
+    'another anagram'                                              => ['coalface', 'cacao elf', true],
+    'another prhase that isn\'t an anagram'                        => ['coalface', 'dark elf', false],
 ]);
 
 it('checks for pangrams when given', function (string $phrase, bool $result) {
     expect($this->service->isPangram($phrase))->toBe($result);
 })->with([
-    'an actual angram' => ['A wizard’s job is to vex chumps quickly in fog.', true],
-    'a random phrase'  => [
+    'an actual angram'               => ['A wizard’s job is to vex chumps quickly in fog.', true],
+    'another angram'                 => ['The quick brown fox jumps over the lazy dog', true],
+    'a phrase that isn\'t an angram' => [
+        'The British Broadcasting Corporation (BBC) is a British public service broadcaster.', false
+    ],
+    'a random phrase'                => [
         'The problem with having an open mind is that people insist on putting things inside of it', false
     ]
 ]);
