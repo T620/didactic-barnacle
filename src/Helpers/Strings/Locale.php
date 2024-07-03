@@ -35,14 +35,18 @@ abstract class Locale implements CheckerInterface
          *
          * use count_chars to handle this for us, with the mode of 1 to only list byte-values
          * with a frequency greater than zero. This will automatically omit any characters that are not present in the word and produce extra validation without
-         * any extra effort.
+         * any extra effort. It doesn't however account for spaces or case sensitivity, so we need to handle those first.
          *
          * Note: I would argue the interface's method description is misleading,
          * because it doesn't cover words that have the same letters but different frequencies
          * I've implemented the method to check for anagrams in the traditional sense
          * and referenced this actual definition online: https://en.wikipedia.org/wiki/Anagram
          */
-        return count_chars(strtolower($word), 1) === count_chars(strtolower($comparison), 1);
+
+        $word       = str_replace(' ', '', strtolower($word));
+        $comparison = str_replace(' ', '', strtolower($comparison));
+
+        return count_chars($word, 1) === count_chars($comparison, 1);
     }
 
     /**
