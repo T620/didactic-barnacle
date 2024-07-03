@@ -1,13 +1,15 @@
 <?php
 
+use App\Helpers\Str;
+
 beforeEach(function () {
     $this->service = new Str();
 });
 
 it('checks for palindromes when given', function (string $subject, bool $result) {
-    expect($this->service->isAnagram($subject))->toBe($result);
+    expect($this->service->isPalindrome($subject))->toBe($result);
 })->with([
-    'anna'                           => ['anna', true],
+    'Anna'                           => ['anna', true],
     'banana'                         => ['banana', false],
     'You should give Josh a job'     => ['You should give Josh a job', false],
     'a sequence of numbers'          => ['1337', false],
@@ -23,13 +25,13 @@ it(
         string $comparison,
         bool $result
     ) {
-        expect($this->service->isPalindrome($subject))->toBeTrue();
+        expect($this->service->isAnagram($subject, $comparison))->toBe($result);
     })->with([
     'glean'                                                        => ['glean', 'angel', true],
     'listen'                                                       => ['listen', 'silent', true],
     'a sequence of numbers'                                        => ['1337', '7331', true],
     'another sequence of numbers'                                  => ['9009', '90091', false],
-    'a phrase'                                                     => ['the eyes', 'they see', true],
+    'a phrase with randomly repeated capitalisation'               => ['thE eyEs', 'they see', true],
     'another phrase'                                               => [
         'Why of course you can, old sport', 'The Great Gatsby', false
     ],
@@ -44,3 +46,5 @@ it('checks for pangrams when given', function (string $phrase, bool $result) {
         'The problem with having an open mind is that people insist on putting things inside of it', false
     ]
 ]);
+
+
