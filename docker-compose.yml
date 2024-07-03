@@ -1,0 +1,30 @@
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: ./docker/php-fpm/Dockerfile
+      target: "development"
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    ports:
+      - '${APP_PORT:-9000}:9000'
+    container_name: "${APP_NAME}_php-fpm"
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www:delegated
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+      target: "development" # would use a docker-swarm.yml file for prod so safe to use development here
+    container_name: "${APP_NAME}_nginx"
+    ports:
+      - "${HTTP_PORT:-88}:80"
+      - "${HTTPS_PORT:-445}:443"
+    volumes:
+      - ./public:/var/www/public:delegated
+      - ./certs:/usr/share/certs:ro
+    restart: unless-stopped
+    depends_on:
+      - app
