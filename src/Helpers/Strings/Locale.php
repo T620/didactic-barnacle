@@ -1,19 +1,16 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Helpers\Strings;
 
-//use App\Traits\HandlesItalianAlphabet;
+use App\Helpers\CheckerInterface;
 
 /**
  * Class Str
  * I may or may not have borrowed the name from Laravel
  */
-class Str implements CheckerInterface
+abstract class Locale implements CheckerInterface
 {
-    private static $lettersInAlphabet = 26;
-
-    // just for fun
-//    use HandlesItalianAlphabet;
+    use UniquesStrings;
 
     /**
      * @inheriDoc
@@ -49,27 +46,18 @@ class Str implements CheckerInterface
     }
 
     /**
-     * @inheriDoc
+     * @inheritDoc
+     * Each Language will have a different number of letters in its alphabet
+     * but the logic is the same. I've made this method abstract so that each locale can define the number of letters in its alphabet
+     * while having the main, repeated logic inside a trait, so it can be reused across all locales
      */
-    public function isPangram(string $phrase): bool
-    {
-        /*
-         * We could define the alphabet as a string and use str_split to convert it to an array
-         * but we know for certainty that the alphabet will always be the same, so we can just
-         * check its length and ensure the phrase contains all the letters via array_unique
-         */
+    abstract public function isPangram(string $phrase): bool;
 
-        // we will need to format the phrase to remove any non-alphabetic characters
-        // so, we'll use a regular expression pattern to match only letters
-        $pattern  = '/[^a-z]/i'; // a-z, /i = case-insensitive
-
-        // remove any non-alphabetic characters
-        $phrase = preg_replace($pattern, '', $phrase);
-
-        // now we've removed the letters, we can check if the phrase contains all the letters
-        // convert to an array and check the length
-        $unique = array_unique(str_split(strtolower($phrase)));
-
-        return count($unique) === self::$lengthOfEnglishAlphabet;
-    }
+    /*
+     * I've made this method abstract so that each locale can define the number of letters in its alphabet
+     * without having to worry about conflicting property names (e.g. $lettersInAlphabet
+     * for both en/it would cause an error) and to ensure that the method is implemented in each locale
+     * so we can guarantee that the method is available to call
+     */
+    abstract public static function lettersInAlphabet(): int;
 }
