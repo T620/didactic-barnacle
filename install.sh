@@ -1,12 +1,22 @@
 #!/bin/bash
 
-echo "installing composer dependencies"
+echo "                                 ";
+echo "       _____    ____  __  __     ";
+echo "      / /   |  / __ \/ / / /     ";
+echo " __  / / /| | / / / / / / /      ";
+echo "/ /_/ / ___ |/ /_/ / /_/ /       ";
+echo "\____/_/  |_/_____/\____/        ";
+echo "                                 ";
+echo "                                 ";
+
+printf "\nInstalling composer dependencies\n"
 composer install
 
-echo "building containers"
+printf "\nBuilding containers...\n"
 docker-compose build
 
-echo "starting containers"
+printf "\nStarting containers...\n"
 docker-compose up -d
+docker-compose ps
 
-echo "Install complete."
+printf "\nInstall complete. Have a nice day! :)\n"
