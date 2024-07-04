@@ -4,6 +4,7 @@ Pretty simple symfony application. Checkout `src/Helpers/Strings/Locale.php`.
 - Docker runtime (Colima, Docker Desktop, etc)
 - Docker Compose (comes with Docker Desktop)
 - Composer to install the dependencies (though you can also do this in the container, up to you)
+- mkcert, available via homebrew or your package manager of choice. This is used to generate SSL certificates for the local development environment.
 
 ### Installation
 I wrote a very simple installation script that wraps around docker-compose. I recommend you read it before making it exectuable:
