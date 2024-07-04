@@ -1,5 +1,6 @@
 <?php
 
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -11,7 +12,7 @@
 |
 */
 
-// uses(Tests\TestCase::class)->in('Feature');
+ uses(KernelTestCase::class)->in('Feature');
 
 /*
 |--------------------------------------------------------------------------
