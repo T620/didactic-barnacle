@@ -12,6 +12,14 @@ echo "                                 ";
 printf "\nInstalling composer dependencies\n"
 composer install
 
+printf "\n Installing SSL Certifications for TLS\n"
+mkdir -p certs
+cd certs || exit
+mkcert -install localhost
+
+echo "Setting up environment"
+echo "APP_NAME=Jadu" >> .env
+
 printf "\nBuilding containers...\n"
 docker-compose build
 
